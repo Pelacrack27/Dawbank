@@ -150,7 +150,7 @@ public class CuentaBancaria {
 	//Se usa el pattern, para comprobar que es un numero, no un texto
 	
 	public boolean compruebaMovimiento (String cantidad) {
-		Pattern pat = Pattern.compile("[0-9]{0-325}"); //longitud maxima de 325 cifras de un dato tipo double
+		Pattern pat = Pattern.compile("[0-9]*"); //da igaul la longitud, si contiene solo numeros esta bien
 		Matcher mat = pat.matcher(cantidad);
 		return mat.matches();
 	}
