@@ -73,4 +73,5 @@ public class Movimiento {
 		setTipo(tipo);
 		setCantidad(cantidad);
 	} //Constructor
-}
+	
+} //Clase Movimiento

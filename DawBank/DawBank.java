@@ -5,6 +5,9 @@ import java.util.regex.Pattern; //Importamos el pattern
 public class DawBank {
 
 	public static void main(String[] args) {
+		
+		//Creamos el scanner
+		
 		Scanner entrada = new Scanner (System.in);
 		
 		//Creamos las variables
@@ -49,7 +52,7 @@ public class DawBank {
 		
 		do {
 			
-			menu.muestraMenu();
+			menu.muestraMenu(); //Muestra el menu por pantalla
 			
 			//Pedimos la opcion del usuario
 			
@@ -80,22 +83,22 @@ public class DawBank {
 				break;
 			case "I": 
 				String ingreso;
-				do {
+				do { //Comprueba que la cantidad es un numero
 					System.out.println("Inserte la cantidad a ingresar:");
 					ingreso = entrada.nextLine();
 					if (!cuenta.compruebaMovimiento(ingreso)) {
 						System.out.println("Formato incorrecto, vuelva a intentarlo");
 					} //if
 				} while (!cuenta.compruebaMovimiento(ingreso)); //do-while
-				do {
+				do { //Comprueba que la fecha sea correcta
 					System.out.println("Inserte la fecha del ingreso (formato dd/mm/aaaa):");
 					fecha = entrada.nextLine();
 					if (!cuenta.compruebaFecha(fecha)) {
 						System.out.println("Formato incorrecto, vuelva a intentarlo");
-					}
+					} //if
 					else {
 						cuenta.ingreso(ingreso, fecha); //Hace el ingreso
-					}
+					} //else
 				} while (!cuenta.compruebaFecha(fecha)); //do-while
 				espera();
 				break;
@@ -116,7 +119,7 @@ public class DawBank {
 					} //if
 					else {
 						cuenta.retirada(retirada, fecha); //Hace la retirada
-					}
+					} //else
 				} while (!cuenta.compruebaFecha(fecha)); //do-while
 				espera();
 				break;
@@ -150,12 +153,14 @@ public class DawBank {
 	
 	//Metodo de espera
 	//No se cierra el scanner, se puede usar mas veces
+	//Se usa el suppresswarning para que se quite el warning de que no se cierra el scanner
 	
 	@SuppressWarnings("resource")
 	public static void espera() {
 		Scanner espera = new Scanner (System.in);
 		System.out.println("**************");
 		System.out.println("Presione enter");
-		espera.next();
+		espera.nextLine();
 	} //Metodo
+	
 } //Clase Dawbank

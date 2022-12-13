@@ -10,41 +10,44 @@ public class CuentaBancaria {
 	private String titular;
 	private double saldo = 0.0;
 	
+	//Constante del descubierto maximo
+	
 	private static double descubiertoMaximo = -50.0;
+	
+	//Array de objetos e id de cada movimiento (incremental)
 	
 	private Movimiento historico[] = new Movimiento [100];
 	private int numMovimiento = 0;
-	
 	
 	//Obtiene el iban
 	
 	private void obtenIban(String iban) {
 		this.iban = iban;
-	}
+	} //Metodo
 	
 	//Obtiene el titular
 	
 	private void obtenTitular(String titular) {
 		this.titular = titular;
-	}
+	} //Metodo
 	
 	//Muestra el iban
 	
 	public void muestraIban() {
 		System.out.println("El iban es " + iban);
-	}
+	} //Metodo
 	
 	//Muestra el titular
 	
 	public void muestraTitular() {
 		System.out.println("El titular es " + titular);
-	}
+	} //Metodo
 	
 	//Muestra el saldo
 	
 	public void muestraSaldo() {
 		System.out.println("El saldo es " + saldo);
-	}
+	} //Metodo
 	
 	//Muestra la cuenta
 	
@@ -59,10 +62,15 @@ public class CuentaBancaria {
 	public void ingreso(String ingreso, String fecha) {
 		do {
 			if (compruebaMovimiento(ingreso)) {
-				historico[numMovimiento] = new Movimiento(numMovimiento + 1, fecha, "Ingreso", ingreso);
-				this.saldo += Double.parseDouble(ingreso);
-				notificaHacienda(Double.parseDouble(ingreso));
-				numMovimiento++;
+				if (Double.parseDouble(ingreso) > 0) {
+					historico[numMovimiento] = new Movimiento(numMovimiento + 1, fecha, "Ingreso", ingreso);
+					this.saldo += Double.parseDouble(ingreso);
+					notificaHacienda(Double.parseDouble(ingreso));
+					numMovimiento++;
+				}
+				else {
+					System.out.println("La cantidad es 0, no se puede hacer el movimiento");
+				}
 			}
 			else {
 				System.out.println("Es un texto, no un numero, vuelca a intentarlo");
@@ -79,8 +87,9 @@ public class CuentaBancaria {
 					retrasaHistorico();
 					numMovimiento--;
 				} //if
+				if (Double.parseDouble(retirada) > 0) {
 				historico[numMovimiento] = new Movimiento(numMovimiento + 1, fecha, "Retirada", retirada);
-				if (compruebaSaldo(Double.parseDouble(retirada)) == true) {
+				if (compruebaSaldo(Double.parseDouble(retirada))) {
 					this.saldo -= Double.parseDouble(retirada);
 					if (this.saldo < 0.0 ) {
 						System.out.println("AVISO: Saldo negativo");
@@ -91,6 +100,10 @@ public class CuentaBancaria {
 				else {
 					System.out.println("Te vas a quedar en un decubierto mayor al permitido");
 				} //else
+				}
+				else {
+					System.out.println("La cantidad es 0, no se puede hacer el movimiento");
+				}
 			}
 			else {
 				System.out.println("Es un texto, no un numero, vuelca a intentarlo");
@@ -148,12 +161,13 @@ public class CuentaBancaria {
 	
 	//Comprobar 
 	//Se usa el pattern, para comprobar que es un numero, no un texto
+	//Indirectamente, tambien comprueba que la cantidad no es negativa, ya que no permite poner guiones
 	
 	public boolean compruebaMovimiento (String cantidad) {
-		Pattern pat = Pattern.compile("[0-9]*"); //da igaul la longitud, si contiene solo numeros esta bien
+		Pattern pat = Pattern.compile("[0-9]*"); //da igual la longitud, si contiene solo numeros esta bien
 		Matcher mat = pat.matcher(cantidad);
 		return mat.matches();
-	}
+	} //Metodo
 	
 	//Comprobar fecha de un movmiento
 	//Se usa el metodo parse de la clase Integer, ya que el pattern no vale
@@ -196,7 +210,4 @@ public class CuentaBancaria {
 		return fechaCorrecta;
 	} //Metodo
 	
-	
-	
-
-} //Clase
+} //Clase CuentaBancaria

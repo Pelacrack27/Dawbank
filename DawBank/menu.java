@@ -1,6 +1,8 @@
 
 public class menu {
 
+	//Muestra el menu por pantalla
+	
 	public static void muestraMenu() {
 		System.out.println("*********************");
 		System.out.println("Opciones disponibles:");
@@ -12,7 +14,6 @@ public class menu {
 		System.out.println("Hacer retirada (R)");
 		System.out.println("Mostrar lista de movimientos (L)");
 		System.out.println("Salir del programa (S)");
-	}
+	} //Metodo
 	
-	
-}
+} //Clase menu
